@@ -1,0 +1,21 @@
+{$DOMAIN}:443 {
+  log {
+    level INFO
+    output file {$LOG_FILE} {
+      roll_size 10MB
+      roll_keep 10
+    }
+  }
+
+  # Use the ACME DNS-01 challenge to get a cert for the configured domain.
+  tls {
+    dns duckdns {$TOKEN}
+  }
+
+
+  # reverse proxy to the exposed port from your docker container
+  # docker_container_name:exposedport
+  reverse_proxy label_studio:8000
+  }
+  
+
